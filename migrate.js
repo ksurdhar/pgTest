@@ -1,9 +1,9 @@
 var knex = require('knex')({
-    client: 'pg',
-    connection: {
-        host     : '127.0.0.1',
-        user     : 'ks',
-        database : 'pgtest'
+  client: 'pg',
+  connection: {
+    host     : '127.0.0.1',
+    user     : 'ks',
+    database : 'pgtest'
   }
 });
 

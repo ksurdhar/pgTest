@@ -15,7 +15,8 @@ var Schema = {
     user_id: {type: 'integer', nullable: false, unsigned: true},
     ride_id: {type: 'integer', nullable: false, unsigned: true},
     created_at: {type: 'dateTime', nullable: false},
-    updated_at: {type: 'dateTime', nullable: true}
+    updated_at: {type: 'dateTime', nullable: true},
+    cancelled: {type: 'boolean', nullable: true}
   }
 };
 module.exports = Schema;

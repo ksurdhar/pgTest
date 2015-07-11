@@ -154,6 +154,32 @@ router.route('/rides/:id/requests')
     .otherwise(function (err) {
       res.status(500).json({ error: true, data: { message: err.message } });
     });
+  })
+  .put(function(req, res){
+    //make knex query using the params id for the ride
+    //make a get request after the fact and return
+    //see if they're any different
+    console.log('------------REQ PARAM ID:', req.params.id);
+
+    knex('requests').where({
+      ride_id: req.params.id
+    }).update({
+      cancelled: true
+    })
+    .then(function(requests) {
+      Ride.forge({ id: req.params.id })
+      .fetch({ withRelated: ['requests'] })
+      .then(function (ride) {
+        var requests = ride.related('requests');
+        res.json({ error: false, data: requests.toJSON() });
+      })
+      .otherwise(function (err) {
+        res.status(500).json({ error: true, data: { message: err.message } });
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({ error: true, data: { message: err.message } });
+    });
   });
 
 router.route('/requests')
@@ -161,7 +187,7 @@ router.route('/requests')
     Request.forge({
       user_id: req.body.user_id,
       ride_id: req.body.ride_id,
-      created_at: new Date();
+      created_at: new Date()
     })
     .save()
     .then(function (request) {
